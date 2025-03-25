@@ -21,6 +21,9 @@ How to run this:
 2. Install the packages `npm install`
 3. Run this `npm run dev`
 
+To create the database and tables and add the mock data, run this:
+`npm run loadDB`
+
 ## MY JOURNEY <a name="journey"></a>
 - [ ] create issues in repo as like a todo
 - [ ] create database diagram
@@ -30,13 +33,12 @@ How to run this:
   - [x] concurrently
   - [x] nodemon
   - [x] npm
+  - [ ] tailwind
 
-- [ ] create database and tables
+- [x] create database and tables
 ![schema](https://github.com/user-attachments/assets/8b0a5ab0-3928-427a-9cf2-200ff8724f4f)
 
 ## NICE TO HAVES <a name="nice"></a>
-
+- [ ] create a scroll bar with alphabets.
+- [ ] have a button to scroll all the way back up.
 ## SPIKE DOC <a name="spike"></a>
-
-
-[def]: /Users/tpl622_6/Documents/techtonica/techtonica-assignments/contact-list-app/client/src/assets/schema.gif
