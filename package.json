@@ -3,13 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "./client/src/main.jsx",
   "scripts": {
-    "dev": "vite",
+    "client": "vite",
+    "server": "nodemon server/server.js",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",    
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
