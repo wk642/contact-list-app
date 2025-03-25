@@ -32,6 +32,7 @@ How to run this:
   - [x] npm
 
 - [ ] create database and tables
+![schema](https://github.com/user-attachments/assets/8b0a5ab0-3928-427a-9cf2-200ff8724f4f)
 
 ## NICE TO HAVES <a name="nice"></a>
 
