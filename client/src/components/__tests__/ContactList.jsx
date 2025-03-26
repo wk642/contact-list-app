@@ -1,6 +1,7 @@
 import { ArrowLeftIcon, LockClosedIcon, LockOpen1Icon, Pencil1Icon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
 import ContactDetails from "./ContactDetails";
+import ContactForm from "./ContactForm";
 
 function ContactList() {
   // declaring the states
@@ -10,6 +11,7 @@ function ContactList() {
   const [error, setError] = useState(null);
   const [contactEmojis, setContactEmojis] = useState({});
   const [showIdSecret, setShowIdSecret] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
     // all the contacts
@@ -51,8 +53,48 @@ function ContactList() {
 
   // handle the edit button
   const handleEditClick = (selectedContactId) => {
-    // just going to log this out for now
     console.log(`Editing contact with ID: ${selectedContactId}`);
+    setSelectedContact(contacts.find((contact) => contact.id === selectedContactId));
+    setShowForm(true); // Corrected state update
+  };
+
+  // handle the close button
+  const handleCloseForm = () => {
+    setSelectedContact(null);
+    setShowForm(false);
+  };
+
+  // handle adding a new contact
+  const handleAddContact = (newContactData) => {
+    fetch("http://localhost:5000/contacts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newContactData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Parse the JSON response
+      })
+      .then(() => {
+        // Refresh the contacts after successful addition
+        fetch("http://localhost:5000/contacts")
+          .then((response) => response.json())
+          .then((data) => {
+            const emojis = {};
+            data.forEach((contact) => {
+              emojis[contact.id] = getRandomEmoji();
+            });
+            setContactEmojis(emojis);
+            setContacts(data);
+          });
+        setShowForm(false); // Close the form
+      })
+      .catch((error) => {
+        console.error("Error adding contact:", error);
+        // Optionally, display an error message to the user
+      });
   };
 
   // setting up the emojis
@@ -123,6 +165,15 @@ function ContactList() {
           handleEditClick={handleEditClick}
         />
       </div>
+
+      {showForm && (
+        <ContactForm
+          selectedContact={selectedContact}
+          handleAddContact={handleAddContact}
+          handleEditClick={handleEditClick}
+          handleCloseForm={handleCloseForm}
+        />
+      )}
     </div>
   );
 }

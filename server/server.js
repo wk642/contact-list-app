@@ -26,6 +26,21 @@ app.get('/contacts', async (req, res) => {
   }
 })
 
+// Add a new contact
+app.post('/contacts', async (req, res) => {
+  try {
+    const { first_name, last_name, email, phone_number, group_id, notes } = req.body;
+    const newContact = await db.one(
+      'INSERT INTO contacts (first_name, last_name, email, phone_number, group_id, notes) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [first_name, last_name, email, phone_number, group_id, notes]
+    );
+    res.status(201).json(newContact);
+  } catch (error) {
+    console.error('Error adding contact:', error);
+    res.status(500).json({ error: 'Error adding contact' });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
