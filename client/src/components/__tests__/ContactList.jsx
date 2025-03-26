@@ -1,5 +1,6 @@
 import { ArrowLeftIcon, LockClosedIcon, LockOpen1Icon, Pencil1Icon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
+import ContactDetails from "./ContactDetails";
 
 function ContactList() {
   // declaring the states
@@ -113,62 +114,14 @@ function ContactList() {
           selectedContact ? "w-full md:w-1/2" : "hidden"
         }`}
       >
-        {selectedContact && (
-          <div>
-            {/* back button  */}
-            <button
-              className="mb-4 p-2 text-blue-200 hover:text-blue-500 rounded md:hidden"
-              onClick={handleBackClick}
-            >
-              <ArrowLeftIcon />
-            </button>
-
-            {/* Edit button */}
-            <button
-              className="mt-2 p-2 text-white rounded text-blue-200 hover:text-blue-500"
-              onClick={() => handleEditClick(selectedContact.id)}
-            >
-              <Pencil1Icon />
-            </button>
-            <h2 className="text-2xl font-semibold mb-4 text-slate-300">
-              Contact Details
-            </h2>
-            <div className="w-24 h-24 rounded-full mb-4 flex items-center justify-center text-4xl">
-              {contactEmojis[selectedContact.id]}
-            </div>
-            <p className="text-slate-300">
-              <strong>Name:</strong> {selectedContact.first_name} {selectedContact.last_name}
-            </p>
-            <p className="text-slate-300">
-              <strong>Email:</strong> {selectedContact.email}
-            </p>
-            <p className="text-slate-300">
-              <strong>Phone:</strong> {selectedContact.phone_number}
-            </p>
-            <p className="text-slate-300">
-              <strong>Group:</strong> {selectedContact.group_name || ""}
-            </p>
-            <p className="text-slate-300">
-              <strong>Notes:</strong> {selectedContact.notes}
-            </p>
-            <button
-              className="mt-4 p-2 text-white rounded"
-              onClick={() => setShowIdSecret(!showIdSecret)}
-            >
-              {showIdSecret ? <LockClosedIcon className="text-blue-200 hover:text-blue-500"/> : <LockOpen1Icon className="text-blue-200 hover:text-blue-500"/>}
-            </button>
-            {showIdSecret && (
-              <div className="mt-4">
-                <p className="text-slate-300">
-                  <strong>UUID:</strong> {selectedContact.uuid}
-                </p>
-                <p className="text-slate-300">
-                  <strong>Group ID:</strong> {selectedContact.group_id}
-                </p>
-              </div>
-            )}
-          </div>
-        )}
+        <ContactDetails
+          selectedContact={selectedContact}
+          contactEmojis={contactEmojis}
+          showIdSecret={showIdSecret}
+          setShowIdSecret={setShowIdSecret}
+          handleBackClick={handleBackClick}
+          handleEditClick={handleEditClick}
+        />
       </div>
     </div>
   );
