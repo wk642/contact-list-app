@@ -1,10 +1,10 @@
-import { useState } from 'react'
 import './App.css'
+import ContactList from './components/__tests__/ContactList'
 
 function App() {
   return (
     <>
-      <h1>Contacts</h1>
+      <ContactList />
     </>
   )
 }

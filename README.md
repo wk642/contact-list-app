@@ -10,8 +10,11 @@
 7. [SPIKE DOC](#spike)
 
 ## OBJECTIVES <a name="objectives"></a>
+Creating a contact list application.
 
 ## PREREQUISITES <a name="prerequisites"></a>
+- [ ] React
+- [ ] psql
 
 ## DEMO <a name="demo"></a>
 
@@ -35,6 +38,7 @@ To create the database and tables and add the mock data, run this:
   - [x] npm
   - [x] tailwind
   - [x] pg-promise
+  - [x] radix
 
 - [x] create database and tables
 ![schema](https://github.com/user-attachments/assets/8b0a5ab0-3928-427a-9cf2-200ff8724f4f)
@@ -42,4 +46,6 @@ To create the database and tables and add the mock data, run this:
 ## NICE TO HAVES <a name="nice"></a>
 - [ ] create a scroll bar with alphabets.
 - [ ] have a button to scroll all the way back up.
+- [ ] add localstorage or session storage so that the emoojis don't change when refreshed
 ## SPIKE DOC <a name="spike"></a>
+- [ ] research how to add local or session storage
