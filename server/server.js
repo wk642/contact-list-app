@@ -15,16 +15,29 @@ app.get('/test-connection', (req, res) => {
   res.json("Welcome! back end to contatct-list-app is connected");
 });
 
-//display all the contacts
+//display all the contacts and join with groups too
 app.get('/contacts', async (req, res) => {
-  try{
-    const contacts = await db.any('SELECT * FROM contacts');
+  try {
+    const contacts = await db.any(`
+      SELECT
+          contacts.id AS contact_id,
+          contacts.first_name,
+          contacts.last_name,
+          contacts.email,
+          contacts.phone_number,
+          contacts.notes,
+          groups.group_name
+      FROM
+          contacts
+      LEFT JOIN
+          groups ON contacts.group_id = groups.id;
+    `);
     res.json(contacts);
   } catch (error) {
-    console.error("Error in getting contacts");
-    res.status(500).json({error:'Error in getting'});
+    console.error('Error getting contacts:', error);
+    res.status(500).json({ error: 'Error getting contacts' });
   }
-})
+});
 
 // Add a new contact
 app.post('/contacts', async (req, res) => {
