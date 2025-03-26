@@ -25,15 +25,16 @@ To create the database and tables and add the mock data, run this:
 `npm run loadDB`
 
 ## MY JOURNEY <a name="journey"></a>
-- [ ] create issues in repo as like a todo
-- [ ] create database diagram
+- [x] create issues in repo as like a todo
+- [x] create database diagram
 - [ ] Things to install:
   - [x] cors
   - [x] express
   - [x] concurrently
   - [x] nodemon
   - [x] npm
-  - [ ] tailwind
+  - [x] tailwind
+  - [x] pg-promise
 
 - [x] create database and tables
 ![schema](https://github.com/user-attachments/assets/8b0a5ab0-3928-427a-9cf2-200ff8724f4f)
