@@ -17,8 +17,9 @@ app.get('/test-connection', (req, res) => {
 
 // Display all the contacts and join with groups too
 app.get('/contacts', async (req, res) => {
+  const { search } = req.query; 
   try {
-    const contacts = await db.any(`
+    let query = `
       SELECT
         contacts.id AS id,
         contacts.first_name,
@@ -31,8 +32,23 @@ app.get('/contacts', async (req, res) => {
       FROM
         contacts
       LEFT JOIN
-        groups ON contacts.group_id = groups.id;
-    `);
+        groups ON contacts.group_id = groups.id
+    `;
+    let values = [];
+
+    if (search) {
+      query += `
+        WHERE
+          contacts.first_name ILIKE $1 OR
+          contacts.last_name ILIKE $1 OR
+          contacts.email ILIKE $1 OR
+          contacts.phone_number LIKE $1
+      `;
+      values = [`%${search}%`];
+    }
+
+    const contacts = await db.any(query, values);
+
     res.json(contacts);
   } catch (error) {
     console.error('Error getting contacts:', error);
