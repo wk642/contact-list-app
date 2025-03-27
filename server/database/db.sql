@@ -41,5 +41,5 @@ CREATE TABLE IF NOT EXISTS contacts (
 -- CONTACTS
 INSERT INTO contacts (first_name, last_name, email, phone_number, notes, profile_image, group_id) VALUES
  ('Winnie', 'Kelley', 'wk01@gmail.com', '555-111-1111', 'This is just a mock contact', NULL, (SELECT id FROM groups WHERE group_name = 'Family')),
- ('John', 'Dough', 'wk02@gmail.com', '555-111-1112', NULL, NULL, (SELECT id FROM groups WHERE group_name = 'Work')),
- ('Jane', 'Dough', 'wk03@gmail.com', '555-111-1113', 'Besties!!!', NULL, (SELECT id FROM groups WHERE group_name = 'Friends'));
+ ('John', 'Doe', 'wk02@gmail.com', '555-111-1112', NULL, NULL, (SELECT id FROM groups WHERE group_name = 'Work')),
+ ('Jane', 'Doe', 'wk03@gmail.com', '555-111-1113', 'Besties!!!', NULL, (SELECT id FROM groups WHERE group_name = 'Friends'));

@@ -231,7 +231,7 @@ function ContactList({ searchContact }) {
           {/* Change to filteredContacts to get the serach to display */}
           {filteredContacts.map((contact) => (
             <li
-              key={contact.contact_id}
+              key={contact.id}
               className="flex items-center p-4 border rounded-lg hover:shadow-md hover:text-slate-300 transition-shadow text-slate-500 justify-center cursor-pointer"
               onClick={() => handleClickContact(contact)}
             >
