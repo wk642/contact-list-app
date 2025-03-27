@@ -62,10 +62,10 @@ function ContactDetails({ selectedContact, contactEmojis, showIdSecret, setShowI
       {showIdSecret && (
         <div className="mt-4">
           <p className="text-slate-300">
-            <strong>UUID:</strong> {selectedContact.uuid}
+            <strong>UUID:</strong> {selectedContact.id}
           </p>
           <p className="text-slate-300">
-            <strong>Group ID:</strong> {selectedContact.group_id}
+            <strong>Group ID:</strong> {selectedContact.group_id || "Not in a group"}
           </p>
         </div>
       )}
