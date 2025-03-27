@@ -13,6 +13,7 @@ function ContactList() {
   const [showIdSecret, setShowIdSecret] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [isAddingContact, setIsAddingContact] = useState(false);
+  const [formMode, setFormMode] = useState("edit"); 
 
   useEffect(() => {
     // all the contacts
@@ -55,19 +56,15 @@ function ContactList() {
 
   // handle add button click
   const handleAddButtonClick = () => {
+    setFormMode("add"); 
     setIsAddingContact(true);
     setSelectedContact(null); 
     setShowForm(true);
   };
 
-  // close add form
-  const handleCloseAddForm = () => {
-    setIsAddingContact(false);
-    setShowForm(false);
-  };
-
   // handle the edit button
   const handleEditClick = (selectedContactId) => {
+    setFormMode("edit");
     console.log(`Editing contact with ID: ${selectedContactId}`);
     setSelectedContact(contacts.find((contact) => contact.id === selectedContactId));
     setShowForm(true);
@@ -269,6 +266,7 @@ function ContactList() {
           handleAddContact={handleAddContact}
           handleEditContact={handleEditContact}
           handleCloseForm={handleCloseForm}
+          formMode={formMode} 
         />
       )}
     </div>

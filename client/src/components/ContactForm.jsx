@@ -1,21 +1,22 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
 
-function ContactForm({ selectedContact, handleAddContact, handleEditContact, handleCloseForm,}) {
+function ContactForm({ selectedContact, handleAddContact, handleEditContact, handleCloseForm, formMode}) {
   // setting the states
   // it can be add or edit 
-  const [activeTab, setActiveTab] = useState(selectedContact ? "edit" : "add");
+  // taking activeTab out, or else it will always edit even if switch it to add
+  // const [activeTab, setActiveTab] = useState(selectedContact ? "edit" : "add");
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
     email: "",
     phone_number: "",
     group_id: null, // have to make sure that group_id is defined as null if a string is returned, or else will run into uuid error
-    notes: "",
+    notes: "",      
   });
 
   useEffect(() => {
-    if (selectedContact && activeTab === "edit") {
+    if (selectedContact && formMode === "edit") {
       setFormData({
         first_name: selectedContact.first_name || "",
         last_name: selectedContact.last_name || "",
@@ -35,7 +36,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
         notes: "",
       });
     }
-  }, [selectedContact, activeTab]);
+  }, [selectedContact, formMode]);
 
   // take the input of the user
   const handleChange = (e) => {
@@ -45,42 +46,26 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
   // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (selectedContact) {
-      handleEditContact({ ...formData, id: selectedContact.id }); // Include the id
+    // if we are in edit mode
+    if (formMode === "edit") { 
+      handleEditContact({ ...formData, id: selectedContact.id });
     } else {
+      // in add mode
       handleAddContact(formData);
     }
     handleCloseForm();
   };
 
+ 
   return (
     <div className="fixed inset-0 flex justify-center items-center">
       <div className="bg-slate-300 p-8 rounded-lg w-full">
         <div className="flex justify-between mb-4">
           <h2 className="text-2xl font-semibold">
-            {activeTab === "add" ? "Add Contact" : "Edit Contact"}
+            {formMode === "add" ? "Add Contact" : "Edit Contact"}
           </h2>
           <button className="text-gray-500" onClick={handleCloseForm}>
             <Cross1Icon />
-          </button>
-        </div>
-
-        <div className="flex mb-4">
-          <button
-            className={`mr-2 p-2 ${
-              activeTab === "add" ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => setActiveTab("add")}
-          >
-            Add
-          </button>
-          <button
-            className={`p-2 ${
-              activeTab === "edit" ? "bg-blue-500 text-white" : "bg-gray-200"
-            }`}
-            onClick={() => setActiveTab("edit")}
-          >
-            Edit
           </button>
         </div>
 
@@ -98,6 +83,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
               required
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Last Name
@@ -111,6 +97,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
               required
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Email
@@ -123,6 +110,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
               onChange={handleChange}
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Phone
@@ -136,6 +124,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
               required
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Group
@@ -148,6 +137,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
               onChange={handleChange}
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Notes
@@ -159,12 +149,14 @@ function ContactForm({ selectedContact, handleAddContact, handleEditContact, han
               onChange={handleChange}
             />
           </div>
+
           <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
           >
-            {activeTab === "add" ? "Add Contact" : "Save Changes"}
+            {formMode === "add" ? "Add" : "Update"}
           </button>
+
         </form>
       </div>
     </div>
