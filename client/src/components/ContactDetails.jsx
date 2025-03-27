@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowLeftIcon, LockClosedIcon, LockOpen1Icon, Pencil1Icon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, EyeClosedIcon, EyeOpenIcon, Pencil1Icon } from "@radix-ui/react-icons";
 
 function ContactDetails({ selectedContact, contactEmojis, showIdSecret, setShowIdSecret, handleBackClick, handleEditClick }) {
   // if no contact selected: 
@@ -9,7 +9,7 @@ function ContactDetails({ selectedContact, contactEmojis, showIdSecret, setShowI
 
   return (
     <div>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-25">
         {/* if medium and large screens show side by side.
         if smaller screen show the contact detail over the contact list. */}
 
@@ -54,10 +54,20 @@ function ContactDetails({ selectedContact, contactEmojis, showIdSecret, setShowI
 
       {/* Lock button to show or hide the group uuid and contact uuid */}
       <button
-        className="mt-4 p-2 text-white rounded"
+        className="mt-4 p-2 text-white flex item-center"
         onClick={() => setShowIdSecret(!showIdSecret)}
       >
-        {showIdSecret ? <LockClosedIcon className="text-blue-200 hover:text-blue-500" /> : <LockOpen1Icon className="text-blue-200 hover:text-blue-500" />}
+        {showIdSecret ? 
+          <>
+            <EyeClosedIcon className="text-blue-200 hover:text-blue-500" /> 
+            <span className="text-blue-200 hover:text-blue500 ml-2"> Hide IDs </span>
+          </> 
+          :
+          <>
+            <EyeOpenIcon className="text-blue-200 hover:text-blue-500" />
+            <span className="text-blue-200 hover:text-blue500 ml-2"> Show IDs </span>
+          </>
+        }
       </button>
       {showIdSecret && (
         <div className="mt-4">

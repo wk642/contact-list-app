@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import ContactList from './components/ContactList'
-import SearchBar from './components/SearchBar'
+import ContactList from './components/ContactList';
+import SearchBar from './components/searchBar';
 
 function App() {
   const [searchContact, setSearchContact] = useState("");
   const [contacts, setContacts] = useState([]); 
   const [loading, setLoading] = useState(true);
 
+  // search
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,6 +30,7 @@ function App() {
     fetchData();
   }, [searchContact]);
 
+  // when user types into the search bar
   const handleChangeSearch = (event) => {
     setSearchContact(event.target.value);
   };
