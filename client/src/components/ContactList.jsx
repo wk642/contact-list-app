@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import ContactDetails from "./ContactDetails";
 import ContactForm from "./ContactForm";
 
-function ContactList() {
+function ContactList({ searchContact }) {
   // declaring the states
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
@@ -14,6 +14,31 @@ function ContactList() {
   const [showForm, setShowForm] = useState(false);
   const [isAddingContact, setIsAddingContact] = useState(false);
   const [formMode, setFormMode] = useState("edit"); 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredContacts, setFilteredContacts] = useState(contacts);
+
+  // for the search
+  useEffect(() => {
+    setFilteredContacts(contacts);
+  }, [contacts]);
+
+  useEffect(() => {
+    if (contacts) {
+      const filtered = contacts.filter((contact) => {
+        const fullName = `${contact.first_name} ${contact.last_name}`.toUpperCase();
+        return (
+          fullName.includes(searchQuery.toUpperCase()) ||
+          (contact.email && contact.email.toUpperCase().includes(searchQuery.toUpperCase())) ||
+          (contact.phone_number && contact.phone_number.includes(searchQuery))
+        );
+      });
+      setFilteredContacts(filtered);
+    }
+  }, [contacts, searchQuery]);
+
+  useEffect(() => {
+    setSearchQuery(searchContact);
+  }, [searchContact]);
 
   useEffect(() => {
     // all the contacts
@@ -191,19 +216,20 @@ function ContactList() {
           selectedContact ? "hidden md:block md:w-1/2" : "w-full"
         }`}
       >
-        <h2 className="text-3xl font-semibold text-slate-500 mb-6 text-center">
+        <h2 className="text-3xl font-semibold text-slate-500 mb-6 text-center pt-25">
           Contacts
         </h2>
         {/* Add Button */}
         <button
-          className="text-slate-500 hover:text-slate-100 py-2 px-4 mb-4"
+          className="text-slate-500 hover:text-slate-100 py-2 px-4 mb-4 pt-1"
           onClick={handleAddButtonClick}
         >
           <PlusIcon />
         </button>
         <ul>
           {/* Display the contacts as a list */}
-          {contacts.map((contact) => (
+          {/* Change to filteredContacts to get the serach to display */}
+          {filteredContacts.map((contact) => (
             <li
               key={contact.contact_id}
               className="flex items-center p-4 border rounded-lg hover:shadow-md hover:text-slate-300 transition-shadow text-slate-500 justify-center cursor-pointer"
