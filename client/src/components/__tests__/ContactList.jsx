@@ -1,1 +1,0 @@
-// this is going to display all the contacts
