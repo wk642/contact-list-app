@@ -25,7 +25,7 @@ function ContactList() {
         return response.json();
       })
       .then((data) => {
-        console.log("Data from backend:", data);
+        // console.log("Data from backend:", data);
         // setting an emoji for each contact
         // need to come back and learn how to make it so that  the emojis doesn't refresh everytime I refresh
         const emojis = {};

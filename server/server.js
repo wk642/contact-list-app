@@ -26,6 +26,7 @@ app.get('/contacts', async (req, res) => {
         contacts.email,
         contacts.phone_number,
         contacts.notes,
+        contacts.group_id,
         groups.group_name
       FROM
         contacts
@@ -39,13 +40,39 @@ app.get('/contacts', async (req, res) => {
   }
 });
 
+// get the groups 
+app.get('/groups', async (req, res) => {
+  try {
+    const groups = await db.any('SELECT id, group_name FROM groups');
+    res.json(groups);
+  } catch (error) {
+    console.error('Error fetching groups:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Add a group
+app.post('/groups', async (req, res) => {
+  try {
+    const { group_name } = req.body;
+    const newGroup = await db.one(
+      'INSERT INTO groups (group_name) VALUES ($1) RETURNING *',
+      [group_name]
+    );
+    res.json(newGroup);
+  } catch (error) {
+    console.error('Error adding group:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 // Update a contact
 app.put('/contacts/:id', async (req, res) => {
   try {
     const contactId = req.params.id;
     const { first_name, last_name, email, phone_number, group_id, notes } = req.body;
-    console.log('Backend received: id:', contactId, 'data:', req.body);
-    console.log('Values:', {first_name, last_name, email, phone_number, group_id, notes});
+    // console.log('Backend received: id:', contactId, 'data:', req.body);
+    // console.log('Values:', {first_name, last_name, email, phone_number, group_id, notes});
 
     const updatedContact = await db.one(
       'UPDATE contacts SET first_name = $1, last_name = $2, email = $3, phone_number = $4, group_id = $5, notes = $6 WHERE id = $7 RETURNING *',
