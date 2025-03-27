@@ -1,7 +1,7 @@
 import { Cross1Icon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
 
-function ContactForm({ selectedContact, handleAddContact, handleEditForm, handleCloseForm,}) {
+function ContactForm({ selectedContact, handleAddContact, handleEditContact, handleCloseForm,}) {
   // setting the states
   // it can be add or edit 
   const [activeTab, setActiveTab] = useState(selectedContact ? "edit" : "add");
@@ -10,7 +10,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditForm, handle
     last_name: "",
     email: "",
     phone_number: "",
-    group_name: "",
+    group_id: null, // have to make sure that group_id is defined as null if a string is returned, or else will run into uuid error
     notes: "",
   });
 
@@ -21,7 +21,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditForm, handle
         last_name: selectedContact.last_name || "",
         email: selectedContact.email || "",
         phone_number: selectedContact.phone_number || "",
-        group_name: selectedContact.group_name || "",
+        group_id: selectedContact.group_name || null,
         notes: selectedContact.notes || "",
       });
     } else {
@@ -31,7 +31,7 @@ function ContactForm({ selectedContact, handleAddContact, handleEditForm, handle
         last_name: "",
         email: "",
         phone_number: "",
-        group_name: "",
+        group_id: null,
         notes: "",
       });
     }
@@ -45,14 +45,11 @@ function ContactForm({ selectedContact, handleAddContact, handleEditForm, handle
   // handle submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    // add 
-    if (activeTab === "add") {
+    if (selectedContact) {
+      handleEditContact({ ...formData, id: selectedContact.id }); // Include the id
+    } else {
       handleAddContact(formData);
-    } else if (activeTab === "edit") {
-      // edit
-      handleEditForm(selectedContact.id, formData);
     }
-    // close out the form
     handleCloseForm();
   };
 
@@ -146,8 +143,8 @@ function ContactForm({ selectedContact, handleAddContact, handleEditForm, handle
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text"
-              name="group_name"
-              value={formData.group_name}
+              name="group_id"
+              value={formData.group_id}
               onChange={handleChange}
             />
           </div>

@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, LockClosedIcon, LockOpen1Icon, Pencil1Icon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon, LockClosedIcon, LockOpen1Icon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
 import ContactDetails from "./ContactDetails";
 import ContactForm from "./ContactForm";
@@ -55,7 +55,7 @@ function ContactList() {
   const handleEditClick = (selectedContactId) => {
     console.log(`Editing contact with ID: ${selectedContactId}`);
     setSelectedContact(contacts.find((contact) => contact.id === selectedContactId));
-    setShowForm(true); // Corrected state update
+    setShowForm(true); 
   };
 
   // handle the close button
@@ -73,9 +73,9 @@ function ContactList() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`Error! status: ${response.status}`);
         }
-        return response.json(); // Parse the JSON response
+        return response.json();
       })
       .then(() => {
         // Refresh the contacts after successful addition
@@ -89,11 +89,60 @@ function ContactList() {
             setContactEmojis(emojis);
             setContacts(data);
           });
-        setShowForm(false); // Close the form
+        setShowForm(false);
       })
       .catch((error) => {
         console.error("Error adding contact:", error);
-        // Optionally, display an error message to the user
+      });
+  };
+
+  // handle edit contact
+  const handleEditContact = (updatedContactData) => {
+    console.log("Updating contact with data:", updatedContactData);
+
+    fetch(`http://localhost:5000/contacts/${updatedContactData.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedContactData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Contact updated successfully:", data);
+        setContacts((prevContacts) =>
+          prevContacts.map((contact) =>
+            contact.id === data.id ? data : contact
+          )
+        );
+        setShowForm(false);
+      })
+      .catch((error) => {
+        console.error("Error updating contact:", error);
+      });
+  };
+
+  // handle delete contact
+  const handleDeleteContact = (contactId) => {
+    fetch(`http://localhost:5000/contacts/${contactId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        setContacts(contacts.filter((contact) => contact.id !== contactId));
+        const updatedEmojis = { ...contactEmojis };
+        delete updatedEmojis[contactId];
+        setContactEmojis(updatedEmojis);
+      })
+      .catch((error) => {
+        console.error("Error deleting contact:", error);
       });
   };
 
@@ -132,10 +181,28 @@ function ContactList() {
           {/* Display the contacts as a list */}
           {contacts.map((contact) => (
             <li
-              key={contact.id}
+              key={contact.contact_id}
               className="flex items-center p-4 border rounded-lg hover:shadow-md hover:text-slate-300 transition-shadow text-slate-500 justify-center cursor-pointer"
               onClick={() => handleClickContact(contact)}
             >
+              <button
+                className="p-2 text-slate-100 rounded"
+                onClick={(e) => {
+                  // e.stopPropagation();
+                  handleEditClick(contact.contact_id);
+                }}
+              >
+                <Pencil1Icon />
+              </button>
+              <button
+                className="p-2 text-slate-100 rounded"
+                onClick={(e) => {
+                  // e.stopPropagation();
+                  handleDeleteContact(contact.contact_id);
+                }}
+              >
+                <TrashIcon />
+              </button>
               {/* connect the emoji */}
               <div className="w-12 h-12 rounded-full mr-4 flex items-center justify-center text-2xl">
                 {contactEmojis[contact.id]}
@@ -170,7 +237,7 @@ function ContactList() {
         <ContactForm
           selectedContact={selectedContact}
           handleAddContact={handleAddContact}
-          handleEditClick={handleEditClick}
+          handleEditContact={handleEditContact}
           handleCloseForm={handleCloseForm}
         />
       )}
