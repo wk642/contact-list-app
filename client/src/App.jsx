@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ContactList from './components/ContactList';
-import SearchBar from './components/searchBar';
+import SearchBar from './components/SearchBar';
 
 function App() {
   const [searchContact, setSearchContact] = useState("");
