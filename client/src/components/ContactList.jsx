@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, LockClosedIcon, LockOpen1Icon, Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
+import { Pencil1Icon, PlusIcon, TrashIcon } from "@radix-ui/react-icons";
 import React, { useState, useEffect } from "react";
 import ContactDetails from "./ContactDetails";
 import ContactForm from "./ContactForm";
@@ -12,6 +12,7 @@ function ContactList() {
   const [contactEmojis, setContactEmojis] = useState({});
   const [showIdSecret, setShowIdSecret] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [isAddingContact, setIsAddingContact] = useState(false);
 
   useEffect(() => {
     // all the contacts
@@ -50,6 +51,19 @@ function ContactList() {
   const handleBackClick = () => {
     setSelectedContact(null);
     setShowIdSecret(false);
+  };
+
+  // handle add button click
+  const handleAddButtonClick = () => {
+    setIsAddingContact(true);
+    setSelectedContact(null); 
+    setShowForm(true);
+  };
+
+  // close add form
+  const handleCloseAddForm = () => {
+    setIsAddingContact(false);
+    setShowForm(false);
   };
 
   // handle the edit button
@@ -183,6 +197,13 @@ function ContactList() {
         <h2 className="text-3xl font-semibold text-slate-500 mb-6 text-center">
           Contacts
         </h2>
+        {/* Add Button */}
+        <button
+          className="text-slate-500 hover:text-slate-100 py-2 px-4 mb-4"
+          onClick={handleAddButtonClick}
+        >
+          <PlusIcon />
+        </button>
         <ul>
           {/* Display the contacts as a list */}
           {contacts.map((contact) => (
@@ -201,9 +222,12 @@ function ContactList() {
               </button>
               <button
                 className="p-2 text-slate-100 rounded"
-                onClick={() => {
+                onClick={(e) => {
+                  // using stopProagation so that when I  click on the delete button, it doesn't try to open up the details first
+                  // https://www.w3schools.com/jsref/event_stoppropagation.asp
+                  e.stopPropagation();
                   console.log("contact.contact_id from delete button:", contact.id);
-                console.log("Entire contact object:", contact);
+                  console.log("Entire contact object:", contact);
                   handleDeleteContact(contact.id);
                 }}
               >
