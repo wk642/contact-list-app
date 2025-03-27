@@ -23,6 +23,7 @@ function ContactList() {
         return response.json();
       })
       .then((data) => {
+        console.log("Data from backend:", data);
         // setting an emoji for each contact
         // need to come back and learn how to make it so that  the emojis doesn't refresh everytime I refresh
         const emojis = {};
@@ -55,7 +56,7 @@ function ContactList() {
   const handleEditClick = (selectedContactId) => {
     console.log(`Editing contact with ID: ${selectedContactId}`);
     setSelectedContact(contacts.find((contact) => contact.id === selectedContactId));
-    setShowForm(true); 
+    setShowForm(true);
   };
 
   // handle the close button
@@ -129,21 +130,26 @@ function ContactList() {
 
   // handle delete contact
   const handleDeleteContact = (contactId) => {
-    fetch(`http://localhost:5000/contacts/${contactId}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        setContacts(contacts.filter((contact) => contact.id !== contactId));
-        const updatedEmojis = { ...contactEmojis };
-        delete updatedEmojis[contactId];
-        setContactEmojis(updatedEmojis);
+    console.log("Deleting contact with ID:", contactId);
+    if (contactId) {
+      fetch(`http://localhost:5000/contacts/${contactId}`, {
+        method: "DELETE",
       })
-      .catch((error) => {
-        console.error("Error deleting contact:", error);
-      });
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          setContacts(contacts.filter((contact) => contact.id !== contactId));
+          const updatedEmojis = { ...contactEmojis };
+          delete updatedEmojis[contactId];
+          setContactEmojis(updatedEmojis);
+        })
+        .catch((error) => {
+          console.error("Error deleting contact:", error);
+        });
+    } else {
+      console.error("contactId is undefined. Cannot delete.");
+    }
   };
 
   // setting up the emojis
@@ -187,18 +193,18 @@ function ContactList() {
             >
               <button
                 className="p-2 text-slate-100 rounded"
-                onClick={(e) => {
-                  // e.stopPropagation();
-                  handleEditClick(contact.contact_id);
+                onClick={() => {
+                  handleEditClick(contact.id);
                 }}
               >
                 <Pencil1Icon />
               </button>
               <button
                 className="p-2 text-slate-100 rounded"
-                onClick={(e) => {
-                  // e.stopPropagation();
-                  handleDeleteContact(contact.contact_id);
+                onClick={() => {
+                  console.log("contact.contact_id from delete button:", contact.id);
+                console.log("Entire contact object:", contact);
+                  handleDeleteContact(contact.id);
                 }}
               >
                 <TrashIcon />

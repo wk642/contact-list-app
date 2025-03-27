@@ -1,5 +1,5 @@
 import './App.css'
-import ContactList from './components/__tests__/ContactList'
+import ContactList from './components/ContactList'
 
 function App() {
   return (
