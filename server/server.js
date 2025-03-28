@@ -28,6 +28,8 @@ app.get('/contacts', async (req, res) => {
         contacts.phone_number,
         contacts.notes,
         contacts.group_id,
+        contacts.created_at,
+        contacts.updated_at,
         groups.group_name
       FROM
         contacts

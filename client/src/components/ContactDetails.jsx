@@ -60,12 +60,12 @@ function ContactDetails({ selectedContact, contactEmojis, showIdSecret, setShowI
         {showIdSecret ? 
           <>
             <EyeClosedIcon className="text-blue-200 hover:text-blue-500" /> 
-            <span className="text-blue-200 hover:text-blue500 ml-2"> Hide IDs </span>
+            <span className="text-blue-200 hover:text-blue500 ml-2"> Hide IDs & Timestamps </span>
           </> 
           :
           <>
             <EyeOpenIcon className="text-blue-200 hover:text-blue-500" />
-            <span className="text-blue-200 hover:text-blue500 ml-2"> Show IDs </span>
+            <span className="text-blue-200 hover:text-blue500 ml-2"> Show IDs & Timestamps </span>
           </>
         }
       </button>
@@ -76,6 +76,13 @@ function ContactDetails({ selectedContact, contactEmojis, showIdSecret, setShowI
           </p>
           <p className="text-slate-300">
             <strong>Group ID:</strong> {selectedContact.group_id || "Not in a group"}
+          </p>
+          <p className="text-slate-300">
+            <strong>Created at:</strong> {selectedContact.created_at}
+          </p>
+          <p className="text-slate-300">
+            <strong>Updated at:</strong> {selectedContact.updated_at}
+            {/* will have to revisit this. It is displaying the same time as created at */}
           </p>
         </div>
       )}
