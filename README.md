@@ -42,7 +42,7 @@ To create the database and tables and add the mock data, run this:
   - [x] radix
 
 - [x] create database and tables
-![schema](https://github.com/user-attachments/assets/8b0a5ab0-3928-427a-9cf2-200ff8724f4f)
+![schema](client/src/assets/schema.gif)
 
 ## NICE TO HAVES <a name="nice"></a>
 - [ ] create a scroll bar with alphabets.

@@ -16,6 +16,7 @@
   },
   "jest": {
     "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["./client/src/setupTests.js"],
     "transform": {
       "\\.[jt]sx?$": "babel-jest"
     }
@@ -27,6 +28,7 @@
     "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "node-fetch": "^3.3.2",
     "pg-promise": "^11.13.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

@@ -28,6 +28,8 @@ app.get('/contacts', async (req, res) => {
         contacts.phone_number,
         contacts.notes,
         contacts.group_id,
+        contacts.created_at,
+        contacts.updated_at,
         groups.group_name
       FROM
         contacts
@@ -127,7 +129,7 @@ app.delete('/contacts/:id', async (req, res) => {
     console.error('Error deleting contact:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
