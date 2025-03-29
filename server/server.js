@@ -129,7 +129,7 @@ app.delete('/contacts/:id', async (req, res) => {
     console.error('Error deleting contact:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
+})
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
