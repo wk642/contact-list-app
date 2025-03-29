@@ -17,6 +17,7 @@ Creating a contact list application.
 - [ ] psql
 
 ## DEMO <a name="demo"></a>
+![demo](https://github.com/user-attachments/assets/f3deee07-4561-44a2-8463-fd2f0d599bc0)
 
 ## SETUP INSTRUCTIONS <a name="setup"></a>
 How to run this: 
@@ -30,7 +31,7 @@ To create the database and tables and add the mock data, run this:
 ## MY JOURNEY <a name="journey"></a>
 - [x] create issues in repo as like a todo
 - [x] create database diagram
-- [ ] Things to install:
+- [x] Things to install:
   - [x] cors
   - [x] express
   - [x] concurrently
@@ -47,5 +48,6 @@ To create the database and tables and add the mock data, run this:
 - [ ] create a scroll bar with alphabets.
 - [ ] have a button to scroll all the way back up.
 - [ ] add localstorage or session storage so that the emoojis don't change when refreshed
+- [ ] allow users to select their own contact image
 ## SPIKE DOC <a name="spike"></a>
 - [ ] research how to add local or session storage
