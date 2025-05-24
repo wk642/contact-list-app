@@ -1,5 +1,5 @@
 # [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&pause=5000&center=true&vCenter=true&multiline=true&lines=CONTACT+LIST+APP)](https://git.io/typing-svg)
-
+(Still have room to improve this)
 ## TABLE OF CONTENTS 
 1. [OBJECTIVES](#objectives)
 2. [PREREQUISITES](#prerequisites)
