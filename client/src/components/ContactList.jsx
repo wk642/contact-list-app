@@ -188,6 +188,8 @@ function ContactList({ searchContact }) {
     }
   };
 
+  //this is a cool implementation 
+
   // setting up the emojis
   const getRandomEmoji = () => {
     const emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🤩", "🥳", "🥺", "🤯", "🤗", "👋", "👏", "🙌", "🙏"];
